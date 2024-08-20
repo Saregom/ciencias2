@@ -14,7 +14,7 @@ class Product:
 products = []
 
 # Crear 800,000 productos
-for id in range(0, 800000):
+for id in range(1, 800001):
     item = Product(id, f"Producto {id}", round(random.uniform(10, 1000), 2), f"Descripción del producto {id}")
     products.append(item)
 

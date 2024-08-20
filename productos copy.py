@@ -5,14 +5,14 @@ from GenerateObjects import Product
 def take_time(func):
     def wrapper(*args, **kwargs):
         inicio = time.perf_counter()
-        resultado = func(*args, **kwargs)
+        product_infoado = func(*args, **kwargs)
         fin = time.perf_counter()
         tiempo =(f"\nTiempo de ejecución de {func.__name__}: {(fin - inicio)*1000:.10f} milisegundos")
-        return resultado,tiempo
+        return product_infoado,tiempo
     return wrapper
 
-with open('products.pkl', 'rb') as archivo:
-    products = pickle.load(archivo)
+with open('products.pkl', 'rb') as file:
+    products = pickle.load(file)
 
 @take_time
 def sequential_search_by_id(arr, id_product):
@@ -58,75 +58,71 @@ def binary_search_by_name(arr, name):
             right_pos = mid_pos - 1
     return -1
 
+def search_by_id_or_name():
+    print("""
+        Dsea buscar por ID o por nombre?
+        1. ID
+        2. Nombre
+        """)
+
+    return int(input("Opción: "))
+
 def search_products():
     print("""
-
     Búsqueda binaria y secuencial de productos (por ID y por nombre)
       
     Programa hecho por: Juan Lozada 2022020014,
-                    Jhojan Aragon 20221020098,
-                    Santiago Reyes 20221020060
-    
-""")
+                        Jhojan Aragon 20221020060,
+                        Santiago Reyes 20221020098
+    """)
     
     while True:
         opcion = int(input("""
-      ¿Qué tipo de búsqueda desea realizar?
-      1. Secuencial
-      2. Binaria
-      """))
+        ¿Qué tipo de búsqueda desea realizar?
+        1. Secuencial
+        2. Binaria
+        """))
         
         if opcion == 1:
-            print("Busqueda secuencial")
-            
-            opcion = int(input("ID a buscar: "))
-            aux = "Producto " + str(opcion)
-            
-            result, imprimir = sequential_search_by_id(products, opcion)
-            if result != -1:
-                print("\\nEl producto se encuentra en la lista:")
-                print(result)
-                print(imprimir)
+            print("\nBusqueda secuencial")
+
+            if search_by_id_or_name() == 1:
+                opcion = int(input("ID a buscar: "))
+                
+                product_info, time_taken = sequential_search_by_id(products, opcion)
             else:
-                print("\\nEl producto NO se encuentra en la lista")
-            
-            result_name, imprimir2 = sequential_search_by_name(products, aux)
-            if result_name != -1:
-                print("\\nEl producto se encuentra en la lista:")
-                print(result_name)
-                print(imprimir2)
-            else:
-                print("\\nEl producto NO se encuentra en la lista")
+                opcion = input("Nombre a buscar (Prodcuto #)(Ej: Producto 5000): ")
+                
+                product_info, time_taken = sequential_search_by_name(products, opcion)
                 
         elif opcion == 2:
-            print("Busqueda binaria")
+            print("\nBusqueda binaria")
             
-            products_sorted_by_name = sorted(products, key=lambda product: product.name)
-            opcion_binaria = int(input("ID a buscar: "))
-            str_opcion_binaria = str(opcion_binaria)
-            aux_binaria = "Producto " + str_opcion_binaria
-            
-            result_id_binary, imprimir = binary_search_by_id(products, opcion_binaria)
-            if result_id_binary != -1:
-                print("\\nEl producto se encuentra en la lista:")
-                print(result_id_binary)
-                print(imprimir)
+            if search_by_id_or_name() == 1:
+                opcion_binaria = int(input("ID a buscar: "))
+
+                product_info, time_taken = binary_search_by_id(products, opcion_binaria)
+
             else:
-                print("\\nEl producto NO se encuentra en la lista")
+                opcion = input("Nombre a buscar (Producto #): ")
+
+                products_sorted_by_name = sorted(products, key=lambda product: product.name)
                 
-            result_name_binaria, imprimir2 = binary_search_by_name(products_sorted_by_name, aux_binaria)
-            if result_name_binaria != -1:
-                print("\\nEl producto se encuentra en la lista:")
-                print(result_name_binaria)
-                print(imprimir2)
-            else:
-                print("\\nEl producto NO se encuentra en la lista")
+                product_info, time_taken = binary_search_by_name(products_sorted_by_name, opcion)
                 
         else: 
             print("Opción no válida, intente de nuevo.")
+
+        if product_info != -1:
+            print("\nEl producto se encuentra en la lista:")
+            print(product_info)
+            print(time_taken)
+        else:
+            print("\nEl producto NO se encuentra en la lista")
         
-        otra_busqueda = input("¿Desea realizar otra búsqueda? (s/n): ").strip().lower()
-        if otra_busqueda != 's':
+        continue_searching = input("\n¿Desea realizar otra búsqueda? (s/n): ").strip().lower()
+
+        if continue_searching != 's':
             print("Saliendo del programa...")
             break
 
