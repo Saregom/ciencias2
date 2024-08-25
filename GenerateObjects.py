@@ -3,15 +3,15 @@ import pickle
 import random
 
 class Product:
-    def __init__(self, id_product, name, price, description) :
+    def __init__(self, id_product, name, price, description, owner) :
         self.id_product = id_product
         self.name = name
         self.price = price
         self.description = description
-        self.owner_id = None
+        self.owner = owner
 
     def __repr__(self) :
-        return f"Product(id_product={self.id_product}, name={self.name}, price={self.price}, description={self.description}), Dueño={self.owner_id}"
+        return f"Product(id_product={self.id_product}, name={self.name}, price={self.price}, description={self.description}), Dueño={self.owner.id_owner}"
     
 class Owner:
     def __init__(self, id_owner, name):
@@ -19,29 +19,35 @@ class Owner:
         self.name = name
         self.products = []
 
+    def __repr__(self) :
+        return f" - id_owner: {self.id_owner}, name: {self.name}"
+
     def add_product(self, product):
         self.products.append(product)
-        product.owner_id = self.id_owner
 
 if __name__ == "__main__":
     products = []
-    Owners= []
-    Owners.append(Owner(1, "Pablo monterreal"))
-    Owners.append(Owner(2, "Juan Pablo"))
-    Owners.append(Owner(3, "Diego"))
-    Owners.append(Owner(4, "Lopez Obrador"))
-    Owners.append(Owner(5, "Sofia"))
+    owners= []
+    owners.append(Owner(1, "Pablo monterreal"))
+    owners.append(Owner(2, "Juan Pablo"))
+    owners.append(Owner(3, "Diego"))
+    owners.append(Owner(4, "Lopez Obrador"))
+    owners.append(Owner(5, "Sofia"))
     
     # Crear 800,000 productos
     for id in range(1, 800001):
-        item = Product(id, f"Producto {id}", round(random.uniform(10, 1000), 2), f"Descripción del producto {id}")
-        random_owner = random.choice(Owners)  # Escoge un dueño aleatorio
-        random_owner.add_product(item) 
+        random_owner = random.choice(owners)  # Escoge un dueño aleatorio
+        product = Product(id, f"Producto {id}", round(random.uniform(10, 1000), 2), f"Descripción del producto {id}", random_owner)
+        random_owner.add_product(product)
+        products.append(product)
     
-    for owner in Owners:
-        print(f"\nProductos de {owner.name} (ID del dueño: {owner.id_owner}):")
-        for product in owner.products:
-            print(f"  - {product}")
+#    for owner in owners:
+#        print(f"\nProductos de {owner.name} (ID del dueño: {owner.id_owner}):")
+#        for product in owner.products:
+#            print(f"  - {product}")
 
     with open('products.pkl', 'wb') as file:
         pickle.dump(products, file)
+
+    with open('owners.pkl', 'wb') as file:
+        pickle.dump(owners, file)

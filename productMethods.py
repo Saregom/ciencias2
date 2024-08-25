@@ -1,6 +1,6 @@
 import pickle
 import time
-# from GenerateObjects import Product
+from generateObjects import Product
 
 def take_time(func):
     def wrapper(*args, **kwargs):
