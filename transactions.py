@@ -2,8 +2,8 @@ from hashlib import sha256
 import random
 import pickle
 import copy
-from generateObjects import Owner
-from generateObjects import Product
+from GenerateObjects import Owner
+from GenerateObjects import Product
 from productMethods import binary_search_by_id
 from productMethods import binary_search_by_name
 
@@ -25,7 +25,14 @@ class Transaction:
         self.buyer = buyer
 
     def __repr__(self) :
-        return f" - previus hash: {self.previus_hash}\n   hash: {self.hash}\n   transaction id: {self.id_transaction}\n   product: {self.product.name}\n   seller: {self.seller}\n   buyer: {self.buyer}"
+        #se muestra la información de la transaccion
+        return f""" - previus hash: {self.previus_hash}
+            hash: {self.hash}
+            transaction id: {self.id_transaction}
+            product: {self.product.name}   
+            seller: {self.seller}   
+            buyer: {self.buyer}
+            price: {self.product.price}"""
     
     def change_info(self, product, seller, buyer):
         self.product = product
@@ -117,16 +124,19 @@ while True:
                 print(transaction)
     
     elif action == 2:
-        print('\nElije una transacción a cambiar (transaction id):')
-        for transaction in nodes[0]:
-            print(transaction)
-        transaction_id = int(input())
+        try:
+            print('\nElije una transacción a cambiar (transaction id):')
+            for transaction in nodes[0]:
+                print(transaction)
+            transaction_id = int(input())
 
-        backup_transaction = copy.deepcopy(nodes[0][transaction_id-1])
-        transaction_to_change = nodes[0][transaction_id-1]
+            backup_transaction = copy.deepcopy(nodes[0][transaction_id-1])
+            transaction_to_change = nodes[0][transaction_id-1]
 
-        product, owner = take_info()
-        transaction_to_change.change_info(product, product.owner.name, owner.name)
+            product, owner = take_info()
+            transaction_to_change.change_info(product, product.owner.name, owner.name)
+        except:
+            print('Transacción no encontrada')
                 
     errors = validate_transactions_hash(nodes)
 
