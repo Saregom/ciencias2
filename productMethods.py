@@ -88,11 +88,9 @@ def search_products():
 
             if search_by_id_or_name() == 1:
                 opcion = int(input("ID a buscar: "))
-                
                 product_info, time_taken = sequential_search_by_id(products, opcion)
             else:
                 opcion = input("Nombre a buscar (Prodcuto #)(Ej: Producto 5000): ")
-                
                 product_info, time_taken = sequential_search_by_name(products, opcion)
                 
         elif opcion == 2:
@@ -100,14 +98,11 @@ def search_products():
             
             if search_by_id_or_name() == 1:
                 opcion_binaria = int(input("ID a buscar: "))
-
                 product_info, time_taken = binary_search_by_id(products, opcion_binaria)
 
             else:
                 opcion = input("Nombre a buscar (Producto #): ")
-
                 products_sorted_by_name = sorted(products, key=lambda product: product.name)
-                
                 product_info, time_taken = binary_search_by_name(products_sorted_by_name, opcion)
                 
         else: 

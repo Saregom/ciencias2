@@ -5,6 +5,7 @@ import copy
 from generateObjects import Owner
 from generateObjects import Product
 from productMethods import binary_search_by_id
+from productMethods import binary_search_by_name
 
 with open('products.pkl', 'rb') as file:
     products = pickle.load(file)
@@ -12,18 +13,25 @@ with open('products.pkl', 'rb') as file:
 with open('owners.pkl', 'rb') as file:
     owners = pickle.load(file)
 
-nodes = [[], [], [], [], []] #Listas de nodoss
+nodes = [[], [], [], [], []] #Lista de nodos
 
 class Transaction:
     def __init__(self, buyer, product):
         self.previus_hash = None
+        self.id_transaction = len(nodes[0])+1
         self.hash = sha256(str(len(nodes[0])).encode('utf-8')).hexdigest() # toma la longitud de la lista de transacciones para generar cada hash diferente (index)
         self.product = product
         self.seller = product.owner.name
         self.buyer = buyer
 
     def __repr__(self) :
-        return f" - previus hash: {self.previus_hash}, hash: {self.hash} product: {self.product.name}, seller: {self.seller}, buyer: {self.buyer}"
+        return f" - previus hash: {self.previus_hash}\n   hash: {self.hash}\n   transaction id: {self.id_transaction}\n   product: {self.product.name}\n   seller: {self.seller}\n   buyer: {self.buyer}"
+    
+    def change_info(self, product, seller, buyer):
+        self.product = product
+        self.seller = seller
+        self.buyer = buyer
+        self.hash = sha256(str(-len(nodes[0])).encode('utf-8')).hexdigest()
 
 # Se copia la transacción en los demás nodos con diferente apuntador de memoria (deepcopy)
 def copy_nodes(nodes, selected_node):
@@ -42,32 +50,102 @@ def add_transaction(nodes, new_transaction):
         new_transaction.previus_hash = selected_node[-1].hash
 
     selected_node.append(new_transaction)
-
     copy_nodes(nodes, selected_node)
 
+
+def validate_transactions_hash(nodes):
+    # Valida que el hash de la transacción anterior sea igual al hash de la transacción actual
+    previus_hash_error = False
+    hash_per_node_error = False
+    for node in nodes:
+        for i in range(1, len(node)):
+            if node[i].previus_hash != node[i-1].hash:
+                print(f'\nError en el nodo #{nodes.index(node)+1}, hash previo de la transacción #{i+1} no coincide con el hash de la transacción #{i}')
+                previus_hash_error = True
+                break
+
+    # Valida que el hash de la transacción en cada nodo sean iguales
+    for i in range(len(nodes[0])):
+        for j in range(len(nodes)-1):
+            if nodes[j][i].hash != nodes[j+1][i].hash:
+                print(f'\nError en la transaccion #{i+1}, no coincide con los hashes de los demás nodos')
+                hash_per_node_error = True
+                break
+    
+    return (previus_hash_error, hash_per_node_error)
+
+# Se pide el nombre del producto y el comprador al usuario
+def take_info():
+    while True:
+        new_product = input('\nEscribe el nombre del producto a comprar: ')
+        productos_sorted = sorted(products, key=lambda product: product.name)       
+        product_info = binary_search_by_name(productos_sorted, new_product)[0]
+
+        if product_info != -1:
+            n=0
+            print('Vendedor: ', product_info.owner.name)
+            while n==0:
+                print("\nCompradores disponibles: ")
+                for owner in owners:
+                    print(owner)
+                
+                new_buyer = input('\nEscribe el nombre del comprador: ')
+
+                for owner in owners:
+                    if new_buyer == owner.name:
+                        return product_info, owner
+                        
+                if n==0: print("Comprador NO existe")
+            break
+        else:
+            print("El producto NO se encuentra en la lista")
+
+# Ciclo principal
 while True:
-    # Se elige un comprador de la lista de owners
-    print('\nElije un comprador (1, 2, 3, 4, 5):')
-    for owner in owners:
-        print(owner)
-    buyer_id = int(input())
-    
-    # Busca el producto por binary search
-    product_to_buy_id = int(input('\nEscribe el id del producto a comparar (1-800000): '))
-    product, time_taken = binary_search_by_id(products, product_to_buy_id) 
+    action = int(input('\nQue deseas realizar?\n1. Crear una transaccion\n2. Cambiar una transaccion\n'))
 
-    # Creación de la transacción
-    new_transaction = Transaction(owners[buyer_id-1].name, product) 
-    
-    add_transaction(nodes, new_transaction) 
+    if action == 1:
+        # Creación de la transacción
+        product, owner = take_info()
+        new_transaction = Transaction(owner.name, product) 
+        add_transaction(nodes, new_transaction)
 
-    # Imprime las transacciones de cada nodo
-    for i, node in enumerate(nodes):
-        print(f'\nNode {i+1}:')
-        for transaction in node:
+        # Imprime las transacciones de cada nodo
+        for i, node in enumerate(nodes):
+            print(f'\nNode {i+1}:')
+            for transaction in node:
+                print(transaction)
+    
+    elif action == 2:
+        print('\nElije una transacción a cambiar (transaction id):')
+        for transaction in nodes[0]:
             print(transaction)
+        transaction_id = int(input())
 
-    print('\n----------------\n- Oprime cualquier tecla para continuar\n- Ingresa 0 para salir')
+        backup_transaction = copy.deepcopy(nodes[0][transaction_id-1])
+        transaction_to_change = nodes[0][transaction_id-1]
+
+        product, owner = take_info()
+        transaction_to_change.change_info(product, product.owner.name, owner.name)
+                
+    errors = validate_transactions_hash(nodes)
+
+    # Si hay errores se restaura la transacción desde la copia de seguridad (backup_transaction)
+    if errors[0] or errors[1]:
+        for node in nodes:
+            for i in range(len(node)):
+                if node[i].id_transaction == backup_transaction.id_transaction:
+                    node[i] = backup_transaction # Restauramos desde la copia de seguridad
+        
+        # Revalidamos las transacciones después de la restauracion
+        errors_after_restore = validate_transactions_hash(nodes)
+        
+        if errors_after_restore[0] or errors_after_restore[1]:
+            print('\nNo se pudo restaurar completamente la integridad de las transacciones')
+        else:
+            print('\nHubieron cambios en la transaccion, se han restablecido los datos')
+
+    print('\n----------------\n- Ingresa cualquier tecla para continuar\n- Ingresa 0 para salir')
     opcion = input()
     print('----------------')
 
