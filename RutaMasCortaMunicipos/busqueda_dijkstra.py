@@ -1,5 +1,5 @@
 import pandas as pd
-csv_df = pd.read_csv('RutaMasCortaMunicipos/Conexiones.csv')
+csv_df = pd.read_csv('Conexiones.csv')
 csv_df.head()
 
 from geopy.geocoders import Nominatim
