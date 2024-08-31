@@ -4,7 +4,7 @@ from geopy.geocoders import Nominatim
 from geopy.distance import geodesic
 
 
-csv_df = pd.read_csv('conexiones.csv')
+csv_df = pd.read_csv('Conexiones.csv')
 coordenates = pd.read_json('coordenates.json')
 
 # Función para obtener las coordenadas de una ciudad
@@ -29,7 +29,7 @@ def calculate_distance(city1_name, city2_name):
     return distance
 
 # ver conexiones por fila
-matriz_adyacencia = pd.DataFrame(index=csv_df.iloc[:, 0], columns=csv_df.columns[1:], data=0, dtype=float)
+matriz_adyacencia = pd.DataFrame(index=csv_df.iloc[:, 0], columns=csv_df.columns[1:], data=0.0)
 
 for index, row in csv_df.iterrows():
     municipio = row.iloc[0]
@@ -40,6 +40,9 @@ for index, row in csv_df.iterrows():
             print(f"  Conectado con: {municipio_conectado}")
             distancia = calculate_distance(municipio, municipio_conectado)
             matriz_adyacencia.at[municipio, municipio_conectado] = distancia
+    print("----------------------------------------------\n")        
+print("| Matriz Adyacente de los Municipios |\n")
+matriz_adyacencia = matriz_adyacencia.astype(float)
 
 print(matriz_adyacencia)
 # coordenates_df = pd.DataFrame(coordenates)

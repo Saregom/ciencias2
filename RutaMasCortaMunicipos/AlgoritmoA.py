@@ -86,6 +86,10 @@ def a_star_algorithm_pandas(start_city, end_city):
 
 start_city = "Bogotá"
 end_city = "Monguí"
+input(f"""
+Las ciudades para el recorrido seran {start_city} y {end_city}, 
+Dale Enter para continuar
+""")
 path = a_star_algorithm_pandas(start_city, end_city)
 if path:
     print(f"Camino encontrado de {start_city} a {end_city}: {path}")
