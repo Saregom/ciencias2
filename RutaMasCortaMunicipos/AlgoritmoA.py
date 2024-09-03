@@ -1,11 +1,9 @@
 import heapq
+import pandas as pd
 from MatrizDeDistancias import calculate_distance 
 
-coordenates = pd.read_json('coordenates.json')
-matriz_adyacencia = pd.read_csv('distances.csv', index_col=0)
-
-
-
+coordenates = pd.read_json('data/coordenates.json')
+matriz_adyacencia = pd.read_csv('data/distances.csv', index_col=0)
 
 def a_star_algorithm(start_city, end_city):
     # Inicializar open_list y closed_list
@@ -43,14 +41,14 @@ def a_star_algorithm(start_city, end_city):
     
     return None  # No se encontró un camino
 
-
-
 start_city = "Bogotá"
 end_city = "Monguí"
+
 input(f"""
-Las ciudades para el recorrido seran {start_city} y {end_city}, 
+Las ciudades para encontrar el recorrido seran desde {start_city} hasta {end_city} 
 Dale Enter para continuar
 """)
+
 path = a_star_algorithm(start_city, end_city)
 if path:
     print(f"Camino encontrado de {start_city} a {end_city}: {path}")

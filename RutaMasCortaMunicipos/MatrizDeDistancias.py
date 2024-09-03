@@ -1,11 +1,9 @@
 import pandas as pd
-
 from geopy.geocoders import Nominatim
 from geopy.distance import geodesic
 
-
-csv_df = pd.read_csv('Conexiones.csv')
-coordenates = pd.read_json('coordenates.json')
+csv_df = pd.read_csv('data/conexiones.csv')
+coordenates = pd.read_json('data/coordenates.json')
 
 # Función para obtener las coordenadas de una ciudad
 def create_coordenates():
@@ -14,12 +12,12 @@ def create_coordenates():
     for municipio in csv_df.iloc[:, 0]:
         location = geolocator.geocode(f"{municipio}, Colombia")
         if location:
-            coordenates_dicc[municipio] = (location.latitude, location.longitude)
+            coordenates_dicc[municipio] = {"latitude": location.latitude, "longitude": location.longitude}
         else:
             print(f"No se encontraron coordenates para {municipio}")
     return coordenates_dicc
 
-# pd.DataFrame(create_coordenates()).to_json('coordenates.json')
+# pd.DataFrame(create_coordenates()).to_json('coordenates2.json')
 
 # Función para calcular la distancia entre dos ciudades
 def calculate_distance(city1_name, city2_name):
@@ -28,22 +26,23 @@ def calculate_distance(city1_name, city2_name):
     distance = geodesic(city1_coords, city2_coords).kilometers
     return distance
 
-# ver conexiones por fila
-matriz_adyacencia = pd.DataFrame(index=csv_df.iloc[:, 0], columns=csv_df.columns[1:], data=0.0)
+if __name__ == "__main__":
+    # ver conexiones por fila
+    matriz_adyacencia = pd.DataFrame(index=csv_df.iloc[:, 0], columns=csv_df.columns[1:], data=0.0)
 
-for index, row in csv_df.iterrows():
-    municipio = row.iloc[0]
-    print(f"Municipio: {municipio}")
-    for i, conexion in enumerate(row[1:]):
-        municipio_conectado = csv_df.columns[i + 1]
-        if conexion == 1:
-            print(f"  Conectado con: {municipio_conectado}")
-            distancia = calculate_distance(municipio, municipio_conectado)
-            matriz_adyacencia.at[municipio, municipio_conectado] = distancia
-    print("----------------------------------------------\n")        
-print("| Matriz Adyacente de los Municipios |\n")
-matriz_adyacencia = matriz_adyacencia.astype(float)
+    # Llenar la matriz de adyacencia con las distancias entre los municipios conectados
+    for index, row in csv_df.iterrows():
+        municipio = row.iloc[0]
+        print(f"Municipio: {municipio}")
+        for i, conexion in enumerate(row[1:]):
+            municipio_conectado = csv_df.columns[i + 1]
+            if conexion == 1:
+                print(f"  Conectado con: {municipio_conectado}")
+                distancia = calculate_distance(municipio, municipio_conectado)
+                matriz_adyacencia.at[municipio, municipio_conectado] = distancia
+        print("----------------------------------------------\n")   
 
-print(matriz_adyacencia)
-# coordenates_df = pd.DataFrame(coordenates)
-matriz_adyacencia.to_csv('distances.csv')
+    print("| Matriz Adyacente de los Municipios |\n")
+    matriz_adyacencia = matriz_adyacencia.astype(float)
+    print(matriz_adyacencia)
+    # matriz_adyacencia.to_csv('distances.csv')
