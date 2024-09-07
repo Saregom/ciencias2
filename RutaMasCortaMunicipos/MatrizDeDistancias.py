@@ -17,7 +17,7 @@ def create_coordenates():
             print(f"No se encontraron coordenates para {municipio}")
     return coordenates_dicc
 
-# pd.DataFrame(create_coordenates()).to_json('coordenates2.json')
+pd.DataFrame(create_coordenates()).to_json('coordenates2.json')
 
 # Función para calcular la distancia entre dos ciudades
 def calculate_distance(city1_name, city2_name):
