@@ -5,44 +5,7 @@ from MatrizDeDistancias import calculate_distance
 coordenates = pd.read_json('data/coordenates.json')
 matriz_adyacencia = pd.read_csv('data/distances.csv', index_col=0)
 
-def a_star_algorithm(start_city, end_city):
-    # Inicializar open_list y closed_list
-    open_list = []
-    heapq.heappush(open_list, (0, start_city))
-    came_from = {}
-    g_score = {city: float('inf') for city in matriz_adyacencia.index}
-    g_score[start_city] = 0
-    f_score = {city: float('inf') for city in matriz_adyacencia.index}
-    f_score[start_city] = calculate_distance(start_city, end_city)
-    total_distance = 0  # Variable para acumular la distancia total
-    
-    while open_list:
-        _, current_city = heapq.heappop(open_list)
-
-        # Si llegamos a la ciudad destino
-        if current_city == end_city:
-            total_path = [current_city]
-            while current_city in came_from:
-                previous_city = came_from[current_city]
-                total_distance += matriz_adyacencia.at[previous_city, current_city]  # Suma la distancia
-                current_city = previous_city
-                total_path.append(current_city)
-            return total_path[::-1], total_distance  # Devolvemos el camino y la distancia total
-
-        # Ver todos los vecinos
-        for neighbor in matriz_adyacencia.columns:
-            if matriz_adyacencia.at[current_city, neighbor] > 0:
-                tentative_g_score = g_score[current_city] + matriz_adyacencia.at[current_city, neighbor]
-                
-                if tentative_g_score < g_score[neighbor]:
-                    came_from[neighbor] = current_city
-                    g_score[neighbor] = tentative_g_score
-                    f_score[neighbor] = g_score[neighbor] + calculate_distance(neighbor, end_city)
-                    heapq.heappush(open_list, (f_score[neighbor], neighbor))
-    
-    return None, None  # No se encontró un camino
-
-def greedy_best_first_search(start_city, end_city):
+def greedy_best_first_search_hn(start_city, end_city):
     open_list = []  # Lista de nodos por explorar
     closed_list = set()  # Lista de nodos ya explorados
     heapq.heappush(open_list, (0, start_city))  # Iniciar con la ciudad de origen
@@ -88,6 +51,43 @@ def greedy_best_first_search(start_city, end_city):
 
     return None, None  # No se encontró un camino
 
+def a_star_algorithm(start_city, end_city):
+    # Inicializar open_list y closed_list
+    open_list = []
+    heapq.heappush(open_list, (0, start_city))
+    came_from = {}
+    g_score = {city: float('inf') for city in matriz_adyacencia.index}
+    g_score[start_city] = 0
+    f_score = {city: float('inf') for city in matriz_adyacencia.index}
+    f_score[start_city] = calculate_distance(start_city, end_city)
+    total_distance = 0  # Variable para acumular la distancia total
+    
+    while open_list:
+        _, current_city = heapq.heappop(open_list)
+
+        # Si llegamos a la ciudad destino
+        if current_city == end_city:
+            total_path = [current_city]
+            while current_city in came_from:
+                previous_city = came_from[current_city]
+                total_distance += matriz_adyacencia.at[previous_city, current_city]  # Suma la distancia
+                current_city = previous_city
+                total_path.append(current_city)
+            return total_path[::-1], total_distance  # Devolvemos el camino y la distancia total
+
+        # Ver todos los vecinos
+        for neighbor in matriz_adyacencia.columns:
+            if matriz_adyacencia.at[current_city, neighbor] > 0:
+                tentative_g_score = g_score[current_city] + matriz_adyacencia.at[current_city, neighbor]
+                
+                if tentative_g_score < g_score[neighbor]:
+                    came_from[neighbor] = current_city
+                    g_score[neighbor] = tentative_g_score
+                    f_score[neighbor] = g_score[neighbor] + calculate_distance(neighbor, end_city)
+                    heapq.heappush(open_list, (f_score[neighbor], neighbor))
+    
+    return None, None  # No se encontró un camino
+
 start_city = "Bogotá"
 end_city = "Puerto Carreño"
 
@@ -96,18 +96,18 @@ end_city = "Puerto Carreño"
 # Dale Enter para continuar
 # """)
 
+# Ejecutar Búsqueda voraz
+path_greedy, distance_greedy = greedy_best_first_search_hn(start_city, end_city)
+if path_greedy:
+    print(f"\nCamino encontrado por Búsqueda Voraz h(n) desde {start_city} a {end_city}: {path_greedy}")
+    print(f"Distancia: {distance_greedy} km\n")
+else:
+    print(f"No se encontró un camino de {start_city} a {end_city} con busqueda Voraz h(n)\n")
+
 path, distance = a_star_algorithm(start_city, end_city)
 if path:
-    print(f"Camino encontrado de {start_city} a {end_city}: {path}")
-    print(f'Distancia h(n): {calculate_distance(start_city, end_city)}')
-    print(f"Distancia A* h(n) + g(n): {distance}\n")
+    print(f"Camino encontrado por A* h(n) + g(n) desde {start_city} a {end_city}: {path}")
+    print(f"Distancia: {distance} km\n")
 else:
-    print(f"No se encontró un camino de {start_city} a {end_city}")
+    print(f"No se encontro un camino de {start_city} a {end_city} con busqueda A*\n")
 
-# Ejecutar Búsqueda voraz
-path_greedy, distance_greedy = greedy_best_first_search(start_city, end_city)
-if path_greedy:
-    print(f"Camino encontrado por Búsqueda Voraz de {start_city} a {end_city}: {path_greedy}")
-    print(f"Distancia total recorrida por Búsqueda Voraz: {distance_greedy} km")
-else:
-    print(f"No se encontró un camino de {start_city} a {end_city} con Búsqueda Voraz.")
