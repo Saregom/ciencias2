@@ -88,15 +88,13 @@ def greedy_best_first_search(start_city, end_city):
 
     return None, None  # No se encontró un camino
 
-
-
 start_city = "Bogotá"
-end_city = "Sopó"
+end_city = "Puerto Carreño"
 
-input(f"""
-Las ciudades para encontrar el recorrido seran desde {start_city} hasta {end_city} 
-Dale Enter para continuar
-""")
+# input(f"""
+# Las ciudades para encontrar el recorrido seran desde {start_city} hasta {end_city} 
+# Dale Enter para continuar
+# """)
 
 path, distance = a_star_algorithm(start_city, end_city)
 if path:
