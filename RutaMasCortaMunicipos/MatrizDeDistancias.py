@@ -17,8 +17,8 @@ def create_coordenates():
             print(f"No se encontraron coordenates para {municipio}")
     return coordenates_dicc
 
-# pd.DataFrame(create_coordenates()).to_json('coordenates3.json', utf='utf-8')
-print(create_coordenates())
+# pd.DataFrame(create_coordenates()).to_json('data/coordenates2.json', force_ascii=False)
+
 
 # Función para calcular la distancia entre dos ciudades
 def calculate_distance(city1_name, city2_name):
@@ -44,6 +44,6 @@ if __name__ == "__main__":
         # print("----------------------------------------------\n") 
 
     matriz_adyacencia = matriz_adyacencia.astype(float)
+    # matriz_adyacencia.to_csv('data/distances2.csv')
     # print("| Matriz Adyacente de los Municipios |\n")
-    matriz_adyacencia.to_csv('data/distances2.csv')
     # print(matriz_adyacencia)
