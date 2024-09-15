@@ -40,7 +40,7 @@ def reconstruct_path(predecessors, origin_city, destination_city):
 
 if __name__ == "__main__":
     # Cargar la matriz de distancias desde un archivo CSV
-    df = pd.read_csv('data/distances2.csv', index_col=0)
+    df = pd.read_csv('data/distances.csv', index_col=0)
     cities = df.columns.tolist()
     distance_matrix = df.to_numpy()
 

@@ -1,122 +1,126 @@
 {
-    "Bogotá": {
-        "latitude": 4.6533816,
-        "longitude": -74.0836333
+    "Leticia": {
+        "latitude": -4.2129211,
+        "longitude": -69.9425963
     },
-    "Choachí": {
-        "latitude": 4.5822005,
-        "longitude": -73.9137287
+    "Medellín": {
+        "latitude": 6.2443382,
+        "longitude": -75.573553
+    },
+    "Arauca": {
+        "latitude": 6.6666755,
+        "longitude": -71.0000086
+    },
+    "Barranquilla": {
+        "latitude": 11.0101922,
+        "longitude": -74.8231794084
+    },
+    "Cartagena": {
+        "latitude": 10.4265566,
+        "longitude": -75.5441671
     },
     "Tunja": {
         "latitude": 5.5324313,
         "longitude": -73.3616014
     },
-    "Puerto Carreño": {
-        "latitude": 6.1909225,
-        "longitude": -67.4841891
+    "Manizales": {
+        "latitude": 5.0668907,
+        "longitude": -75.5066661
     },
-    "Alejandría": {
-        "latitude": 6.3769175,
-        "longitude": -75.1411601
+    "Florencia": {
+        "latitude": 1.6158666,
+        "longitude": -75.6143045
+    },
+    "Yopal": {
+        "latitude": 5.3356662,
+        "longitude": -72.3936931
     },
     "Popayán": {
         "latitude": 2.4422295,
         "longitude": -76.6072368
     },
-    "Armenia": {
-        "latitude": 4.536307,
-        "longitude": -75.6723751
-    },
-    "Pasto": {
-        "latitude": 1.2140275,
-        "longitude": -77.2785096
-    },
-    "Leticia": {
-        "latitude": -4.2129211,
-        "longitude": -69.9425963
-    },
-    "Ibagué": {
-        "latitude": 4.4386033,
-        "longitude": -75.2108857
-    },
-    "Tocancipá": {
-        "latitude": 4.97370995,
-        "longitude": -73.9211797987
-    },
-    "Monguí": {
-        "latitude": 5.6981559,
-        "longitude": -72.8319267359
-    },
-    "Sincelejo": {
-        "latitude": 9.31542935,
-        "longitude": -75.4283299199
-    },
-    "Guaduas": {
-        "latitude": 5.0674669,
-        "longitude": -74.5950774
-    },
-    "La Palma": {
-        "latitude": 5.3606208,
-        "longitude": -74.3905123
-    },
-    "San Gil": {
-        "latitude": 6.5552856,
-        "longitude": -73.1312353
-    },
-    "Duitama": {
-        "latitude": 5.8277055,
-        "longitude": -73.0338939
-    },
-    "Sopó": {
-        "latitude": 4.8931442,
-        "longitude": -73.9534136553
-    },
     "Valledupar": {
         "latitude": 10.4651733,
         "longitude": -73.2529512
     },
-    "Ciénaga": {
-        "latitude": 11.0062433,
-        "longitude": -74.241022
+    "Quibdó": {
+        "latitude": 5.6923407,
+        "longitude": -76.6583801
     },
-    "Socorro": {
-        "latitude": 6.470518,
-        "longitude": -73.2623187
+    "Montería": {
+        "latitude": 8.6046053,
+        "longitude": -75.9783202721
     },
-    "Girón": {
-        "latitude": 7.0732333,
-        "longitude": -73.1689196
+    "Bogotá": {
+        "latitude": 4.6533816,
+        "longitude": -74.0836333
     },
-    "Manizales": {
-        "latitude": 5.0743694,
-        "longitude": -75.5081166744
+    "Inírida": {
+        "latitude": 3.8650368,
+        "longitude": -67.9259848
+    },
+    "San José del Guaviare": {
+        "latitude": 2.5716141,
+        "longitude": -72.6426515
+    },
+    "Neiva": {
+        "latitude": 3.03325535,
+        "longitude": -75.2794302829
     },
     "Riohacha": {
         "latitude": 11.5352153,
         "longitude": -72.9119566
     },
-    "Buenaventura": {
-        "latitude": 3.8881929,
-        "longitude": -77.0738324
-    },
-    "Neiva": {
-        "latitude": 2.9257038,
-        "longitude": -75.2893937
-    },
-    "Armero": {
-        "latitude": 4.9623792,
-        "longitude": -74.9049753
-    },
-    "Itagüí": {
-        "latitude": 6.1724352,
-        "longitude": -75.6093254
-    },
-    "Maceo": {
-        "latitude": 6.5535012,
-        "longitude": -74.7877474
-    },
     "Santa Marta": {
         "latitude": 11.2320944,
         "longitude": -74.1950916
+    },
+    "Villavicencio": {
+        "latitude": 4.1347644,
+        "longitude": -73.6201517
+    },
+    "Pasto": {
+        "latitude": 1.2140275,
+        "longitude": -77.2785096
+    },
+    "Cúcuta": {
+        "latitude": 7.8971458,
+        "longitude": -72.5080387
+    },
+    "Mocoa": {
+        "latitude": 1.1466295,
+        "longitude": -76.6482327
+    },
+    "Armenia": {
+        "latitude": 4.536307,
+        "longitude": -75.6723751
+    },
+    "Pereira": {
+        "latitude": 4.8143159,
+        "longitude": -75.6946778
+    },
+    "Bucaramanga": {
+        "latitude": 7.1255169,
+        "longitude": -73.1182624
+    },
+    "Sincelejo": {
+        "latitude": 9.31542935,
+        "longitude": -75.4283299199
+    },
+    "Ibagué": {
+        "latitude": 4.4386033,
+        "longitude": -75.2108857
+    },
+    "Cali": {
+        "latitude": 3.4519238,
+        "longitude": -76.5328732
+    },
+    "Mitú": {
+        "latitude": 1.2523268,
+        "longitude": -70.2308883
+    },
+    "Puerto Carreño": {
+        "latitude": 6.1909225,
+        "longitude": -67.4841891
     }
 }

@@ -2,8 +2,8 @@ import pandas as pd
 from geopy.geocoders import Nominatim
 from geopy.distance import geodesic
 
-csv_df = pd.read_csv('data/conexiones2.csv')
-coordenates = pd.read_json('data/coordenates2.json')
+csv_df = pd.read_csv('data/conexiones.csv')
+coordenates = pd.read_json('data/coordenates.json')
 
 # Función para obtener las coordenadas de una ciudad
 def create_coordenates():
