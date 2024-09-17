@@ -7,10 +7,14 @@ from Algoritmos_hn_a import hn_a_algorithms
 from Algoritmo_kruskal import kruskal_algoritm
 from Algoritmo_prim import prim_algoritm
 from bellman_ford_algorithm import bellman_ford_algorithm
+from Algoritmo_dijkstra import encontrar_y_visualizar_camino
 
-with open('data/coordenates.json', encoding='utf-8') as f:
-    data = json.load(f)
+def cargar_coordenadas():
+    with open("data/coordenates.json", 'r') as file:
+        data = json.load(file)
+    return data
 
+data = cargar_coordenadas()
 matriz_adyacencia = pd.read_csv('data/distances.csv', index_col=0)
 
 def visualize_map(aristas, choice):
@@ -90,7 +94,9 @@ if __name__ == "__main__":
         visualize_map(prim_algoritm(matriz_adyacencia), choice)
     elif choice == '5':
         # visualize_map(dijkstra_algorithm(), choice)
-        pass
+        arista , data = encontrar_y_visualizar_camino("Florencia", "Medellín", data)
+        visualize_map(arista,data)
+        
     elif choice == '6':
         visualize_map(bellman_ford_algorithm(), choice)
     else:
