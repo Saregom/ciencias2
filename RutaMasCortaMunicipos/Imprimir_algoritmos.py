@@ -3,8 +3,7 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 
-from Algoritmos_hn_a import greedy_best_first_search_hn
-from Algoritmos_hn_a import a_star_algorithm
+from Algoritmos_hn_a import hn_a_algorithms
 from Algoritmo_kruskal import kruskal_algoritm
 from Algoritmo_prim import prim_algoritm
 from bellman_ford_algorithm import bellman_ford_algorithm
@@ -39,7 +38,7 @@ def visualize_map(aristas, choice):
             line=dict(width=2, color='blue')
         )
 
-        if choice == '3':
+        if choice == '6':
             trace.name = f"{aristas[0][0]} - {ciudad_2}: {peso:.3f}"
         else:
             trace.name = f"{ciudad_1} - {ciudad_2}: {peso:.3f}"
@@ -72,17 +71,27 @@ def visualize_map(aristas, choice):
 
 if __name__ == "__main__":
     print("Elige el algoritmo a utilizar:")
-    print("1. Kruskal")
-    print("2. Prim")
-    print("3. Bellman-Ford")
+    print("1. Greedy Best First Search")
+    print("2. A*")
+    print("3. Kruskal")
+    print("4. Prim")
+    print("5. Dijkstra")
+    print("6. Bellman-Ford")
     
     choice = input("Ingresa el número de la opción deseada: ")
     
     if choice == '1':
-        visualize_map(kruskal_algoritm(matriz_adyacencia), choice)
+        visualize_map(hn_a_algorithms('greedy'), choice)
     elif choice == '2':
-        visualize_map(prim_algoritm(matriz_adyacencia), choice)
+        visualize_map(hn_a_algorithms('a_star'), choice)
     elif choice == '3':
+        visualize_map(kruskal_algoritm(matriz_adyacencia), choice)
+    elif choice == '4':
+        visualize_map(prim_algoritm(matriz_adyacencia), choice)
+    elif choice == '5':
+        # visualize_map(dijkstra_algorithm(), choice)
+        pass
+    elif choice == '6':
         visualize_map(bellman_ford_algorithm(), choice)
     else:
         print("Opción no válida.")
