@@ -1,7 +1,6 @@
-import pandas as pd
 import random
+import json
 
-# crear un acncho de banda aleatorio para cada 20 nodos 
 def create_random_bandwith(i_node):
     if i_node == 1 or i_node == 20:
         return random.randint(1, 10) 
@@ -42,4 +41,8 @@ def create_random_data():
             'fallo actual': current_failure,
             'activo': current_failure > fail_prob,
         }
-    pd.DataFrame(new_data_graph).to_json('Graph/data_graph.json')
+
+    with open('Graph/data_graph.json', 'w') as file:
+        json.dump(new_data_graph, file)
+
+create_random_data()
