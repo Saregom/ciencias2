@@ -42,8 +42,10 @@ def visualize_map(aristas, choice):
             line=dict(width=2, color='blue')
         )
 
-        if choice == '6':
+        if choice == '5':
             trace.name = f"{aristas[0][0]} - {ciudad_2}: {peso:.3f}"
+        elif choice == '6':
+            trace.name = f"{ciudad_1} - {ciudad_2}"
         else:
             trace.name = f"{ciudad_1} - {ciudad_2}: {peso:.3f}"
 
@@ -93,9 +95,10 @@ if __name__ == "__main__":
     elif choice == '4':
         visualize_map(prim_algoritm(matriz_adyacencia), choice)
     elif choice == '5':
-        # visualize_map(dijkstra_algorithm(), choice)
-        arista , data = encontrar_y_visualizar_camino("Florencia", "Medellín", data)
+        
+        arista , data = encontrar_y_visualizar_camino("Leticia", "Medellín", data)
         visualize_map(arista,data)
+        
         
     elif choice == '6':
         visualize_map(bellman_ford_algorithm(), choice)

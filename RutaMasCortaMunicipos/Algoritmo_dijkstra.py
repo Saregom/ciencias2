@@ -2,9 +2,10 @@ import numpy as np
 import pandas as pd
 import json
 from MatrizDeDistancias import calculate_distance
-
-
 import csv 
+import heapq
+
+
 def cargar_distancias(nombre_archivo):
     ciudades = []
     distancias = []
@@ -68,20 +69,19 @@ def encontrar_y_visualizar_camino(ciudad_origen, ciudad_destino, data):
     ciudades, distancias = cargar_distancias(archivo_distancias)
     camino, distancia_total = dijkstra(ciudad_origen, ciudad_destino, ciudades, distancias)
     
-    if distancia_total == float('inf'):
-        print(f"No existe un camino entre {ciudad_origen} y {ciudad_destino}.")
-    else:
-        print(f"El camino más corto de {ciudad_origen} a {ciudad_destino} es:")
-        print(" -> ".join(camino))
-        print(f"Distancia total: {distancia_total:.2f} km")
+       
+    print(f"El camino más corto de {ciudad_origen} a {ciudad_destino} es:")
+    print(" -> ".join(camino))
+    print(f"Distancia total: {distancia_total:.2f} km")
         
         # Generar aristas para visualización
-        aristas = []
-        for i in range(len(camino) - 1):
+    aristas = []
+    for i in range(len(camino) - 1):
             ciudad_1 = camino[i]
             ciudad_2 = camino[i+1]
             peso = distancias[ciudades.index(ciudad_1)][ciudades.index(ciudad_2)]
             aristas.append((ciudad_1, ciudad_2, peso))
         
         # Llamar a la función de visualización
-        return aristas, data
+    return aristas, data
+

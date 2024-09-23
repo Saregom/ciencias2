@@ -44,36 +44,33 @@ def reconstruct_path(predecessors, origin_city, destination_city):
 # Devuelve el formato (ciudad1, ciudad2, peso) para mostrar en mapa
 def bellman_ford_algorithm():
     origin_city = 'Leticia'
+    destination_city = 'Medellín'
     origin_city_index = cities.index(origin_city)
     distances, predecessors = bellman_ford(distance_matrix, origin_city_index)
-    conections_list = []
+
 
     # Mostrar distancias y caminos
     for i, distance in enumerate(distances):
         path = reconstruct_path(predecessors, origin_city_index, i)
         path_cities = [cities[c] for c in path]
-        if len(path_cities) > 1:
-            conections_list.append((path_cities[-2], path_cities[-1], distance))
-        else:
-            # conections_list.append((path_cities[-1], path_cities[-1], distance))
-            conections_list.insert(0, (path_cities[-1], path_cities[-1], distance))
+        if path_cities[-1] == destination_city:
+            conections_list = []
     
-    return conections_list
+            for i in range(len(path_cities) - 1):
+                conections_list.append((path_cities[i], path_cities[i + 1], distance))
+            print(distance)
+            return conections_list
+        
+    return False
+    
     
 # Si se ejecuta el script de forma independiente para mostrar los caminos para cada ciudad
 if __name__ == "__main__":
-    origin_city = 'Bogotá'
+    origin_city = 'Leticia'
     origin_city_index = cities.index(origin_city)
 
-    distances, predecessors = bellman_ford(distance_matrix, cities.index(origin_city))
-
+    #distances, predecessors = bellman_ford(distance_matrix, cities.index(origin_city))
+    a = bellman_ford_algorithm()
+    print(a)
     # Mostrar distancias y caminos
-    print(f"\nDistancias desde {origin_city}:")
-    for i, distance in enumerate(distances):
-        if distance == float('inf'):
-            print(f"{cities[i]}: No hay camino")
-        else:
-            path = reconstruct_path(predecessors, origin_city_index, i)
-            path_cities = [cities[c] for c in path]
-
-            print(f"{cities[i]}: {distance} {path_cities}")
+    
