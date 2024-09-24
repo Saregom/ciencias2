@@ -45,4 +45,5 @@ def create_random_data():
     with open('Graph/data_graph.json', 'w') as file:
         json.dump(new_data_graph, file)
 
-create_random_data()
+if __name__ == "__main__":
+    create_random_data()
