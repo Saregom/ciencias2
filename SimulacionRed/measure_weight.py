@@ -1,2 +1,0 @@
-def ordenar():
-    return False
