@@ -1,23 +1,17 @@
-import pandas as pd
-import random
 import json
 import csv 
-from data_asignation import create_random_data as cr
-from bandwidth_speeds_generation import distancias as calculate_weight
-
-from data_asignation import create_random_bandwith
+from data_asignation import create_random_data 
+from calculate_connection_weights import calculate_weight
 
 with open("Graph/data_graph.json", 'r') as file:
     data_graph = json.load(file)
 
-
-
 # --------------- algoritmo dijkstra ----------------
-def cargar_distancias(nombre_archivo):
+def load_data():
     routers = []
     distancias = []
     
-    with open(nombre_archivo, 'r') as archivo:
+    with open('Graph/connection_weights.csv', 'r') as archivo:
         reader = csv.reader(archivo)
         next(reader)
         
@@ -62,22 +56,40 @@ def dijkstra(origen, destino, routers, distancias):
 
     return camino, distancias_min[routers.index(destino)]
 
-def encontrar_y_visualizar_camino(router_origen, router_destino, message):
-    archivo_distancias = "Graph/bandwidth_speeds.csv"
-    routers, distancias = cargar_distancias(archivo_distancias)
+def get_messages_path(router_origen, router_destino, message, data_messages):
+    routers, distancias = load_data()
     camino, distancia_total = dijkstra(router_origen, router_destino, routers, distancias)
-    
-    print(f'\nEl mensaje "{message}" ha pasaodo por los routers:')
-    print(" -> ".join(camino))
-    print(f"Tiempo tomado: {distancia_total:.2f} ms\n")
+        
+    if camino == []:
+        print(f'El mensaje "{message}" no pudo ser enviado de debido a un fallo en la red.')
+    else:
+        print(f'El mensaje "{message}" ha pasado por los routers:')
+        print(" -> ".join(camino))
+        print(f"Tiempo tomado: {distancia_total:.2f} s")
+
+        data_messages.append({
+            'message': message,
+            'time': distancia_total
+        })
 
 
-# ejecucion principal
+# --------------- ejecucion principal ----------------
 if __name__ == "__main__":
-    message_to_send = input('Ingrese el mensaje a enviar: ')
+    message_to_send = input('\nIngrese el mensaje a enviar: ')
     message_packages = message_to_send.split(' ')
 
+    data_messages = []
+
     for message in message_packages:
-        cr()# le da de nuevo valores ramdoms a los nodos
-        calculate_weight() # vuelve a calcular el peso de las aristas 
-        encontrar_y_visualizar_camino('1', '20', message)
+        print('\n--------------------------------')
+        create_random_data() # le da de nuevo valores ramdoms a los nodos
+        calculate_weight() # vuelve a calcular el peso de las aristas con los nuevos valores
+        get_messages_path('1', '20', message, data_messages)
+
+    # ordenar mensajes por menor tiempo
+    data_messages_ordered = sorted(data_messages, key=lambda data: data['time'])
+
+    final_message = ' '.join([message['message'] for message in data_messages_ordered])
+    
+    print('\n--------------------------------')
+    print(f'El mensaje recibido es: "{final_message}"')

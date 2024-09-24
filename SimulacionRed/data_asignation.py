@@ -11,9 +11,9 @@ def create_random_bandwith(i_node):
 
 def get_fail_prob(i_node):
     if i_node == 1 or i_node == 20:
-        return 0.2
-    elif (i_node >= 2 and i_node <= 6) or (i_node >= 15 and i_node <= 19):
         return 0.1
+    elif (i_node >= 2 and i_node <= 6) or (i_node >= 15 and i_node <= 19):
+        return 0.05
     elif (i_node >= 7 and i_node <= 14):
         return 0.02
     
