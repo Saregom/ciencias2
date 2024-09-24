@@ -2,24 +2,15 @@ import pandas as pd
 import random
 import json
 import csv 
+from data_asignation import create_random_data as cr
+from bandwidth_speeds_generation import distancias as calculate_weight
 
 from data_asignation import create_random_bandwith
 
 with open("Graph/data_graph.json", 'r') as file:
     data_graph = json.load(file)
 
-# --------------- actualizacion de datos ----------------
-def update_data_graph(data_graph):
-    for i in range(1, 21):
-        data_graph[f'{i}']['ancho de banda'] = create_random_bandwith(i)
 
-        current_failure = random.random()
-        data_graph[f'{i}']['fallo actual'] = current_failure
-        data_graph[f'{i}']['activo'] = current_failure > data_graph[f'{i}']['probabilidad de fallo']
-
-    return data_graph
-
-# data_graph = update_data_graph(data_graph)
 
 # --------------- algoritmo dijkstra ----------------
 def cargar_distancias(nombre_archivo):
@@ -87,4 +78,6 @@ if __name__ == "__main__":
     message_packages = message_to_send.split(' ')
 
     for message in message_packages:
+        cr()# le da de nuevo valores ramdoms a los nodos
+        calculate_weight() # vuelve a calcular el peso de las aristas 
         encontrar_y_visualizar_camino('1', '20', message)
