@@ -1,142 +1,142 @@
 {
-    "1": {
-        "ancho de banda": 4,
-        "probabilidad de fallo": 0.1,
-        "capacidad de encolamiento": 5,
-        "fallo actual": 0.8558767115083623,
-        "activo": true
-    },
-    "2": {
-        "ancho de banda": 16,
-        "probabilidad de fallo": 0.05,
-        "capacidad de encolamiento": 20,
-        "fallo actual": 0.21087773922519437,
-        "activo": true
-    },
-    "3": {
-        "ancho de banda": 27,
-        "probabilidad de fallo": 0.05,
-        "capacidad de encolamiento": 20,
-        "fallo actual": 0.3522124668717357,
-        "activo": true
-    },
-    "4": {
-        "ancho de banda": 33,
-        "probabilidad de fallo": 0.05,
-        "capacidad de encolamiento": 20,
-        "fallo actual": 0.3414112684952918,
-        "activo": true
-    },
-    "5": {
-        "ancho de banda": 36,
-        "probabilidad de fallo": 0.05,
-        "capacidad de encolamiento": 20,
-        "fallo actual": 0.07982177855009498,
-        "activo": true
-    },
-    "6": {
-        "ancho de banda": 35,
-        "probabilidad de fallo": 0.05,
-        "capacidad de encolamiento": 20,
-        "fallo actual": 0.6136315859439296,
-        "activo": true
-    },
-    "7": {
-        "ancho de banda": 93,
-        "probabilidad de fallo": 0.02,
-        "capacidad de encolamiento": 50,
-        "fallo actual": 0.0841244554982058,
-        "activo": true
-    },
-    "8": {
-        "ancho de banda": 52,
-        "probabilidad de fallo": 0.02,
-        "capacidad de encolamiento": 50,
-        "fallo actual": 0.7159586933024307,
-        "activo": true
-    },
-    "9": {
-        "ancho de banda": 95,
-        "probabilidad de fallo": 0.02,
-        "capacidad de encolamiento": 50,
-        "fallo actual": 0.14435509609878794,
-        "activo": true
-    },
-    "10": {
-        "ancho de banda": 98,
-        "probabilidad de fallo": 0.02,
-        "capacidad de encolamiento": 50,
-        "fallo actual": 0.01928590195339175,
-        "activo": false
-    },
-    "11": {
-        "ancho de banda": 54,
-        "probabilidad de fallo": 0.02,
-        "capacidad de encolamiento": 50,
-        "fallo actual": 0.7300350316358138,
-        "activo": true
-    },
-    "12": {
-        "ancho de banda": 65,
-        "probabilidad de fallo": 0.02,
-        "capacidad de encolamiento": 50,
-        "fallo actual": 0.4470437371895253,
-        "activo": true
-    },
-    "13": {
-        "ancho de banda": 56,
-        "probabilidad de fallo": 0.02,
-        "capacidad de encolamiento": 50,
-        "fallo actual": 0.8295024490177795,
-        "activo": true
-    },
-    "14": {
-        "ancho de banda": 85,
-        "probabilidad de fallo": 0.02,
-        "capacidad de encolamiento": 50,
-        "fallo actual": 0.6484317489285558,
-        "activo": true
-    },
-    "15": {
-        "ancho de banda": 42,
-        "probabilidad de fallo": 0.05,
-        "capacidad de encolamiento": 20,
-        "fallo actual": 0.847333891802699,
-        "activo": true
-    },
-    "16": {
-        "ancho de banda": 37,
-        "probabilidad de fallo": 0.05,
-        "capacidad de encolamiento": 20,
-        "fallo actual": 0.648960556837757,
-        "activo": true
-    },
-    "17": {
-        "ancho de banda": 28,
-        "probabilidad de fallo": 0.05,
-        "capacidad de encolamiento": 20,
-        "fallo actual": 0.9219873865710378,
-        "activo": true
-    },
-    "18": {
-        "ancho de banda": 32,
-        "probabilidad de fallo": 0.05,
-        "capacidad de encolamiento": 20,
-        "fallo actual": 0.6129221508173469,
-        "activo": true
-    },
-    "19": {
-        "ancho de banda": 30,
-        "probabilidad de fallo": 0.05,
-        "capacidad de encolamiento": 20,
-        "fallo actual": 0.4949112048138581,
-        "activo": true
-    },
-    "20": {
-        "ancho de banda": 9,
-        "probabilidad de fallo": 0.1,
-        "capacidad de encolamiento": 5,
-        "fallo actual": 0.6222114432624736,
-        "activo": true
-    }
+  "1": {
+    "ancho de banda": 1,
+    "probabilidad de fallo": 0.1,
+    "capacidad de encolamiento": 5,
+    "fallo actual": 0.5033279803145779,
+    "activo": true
+  },
+  "2": {
+    "ancho de banda": 19,
+    "probabilidad de fallo": 0.05,
+    "capacidad de encolamiento": 20,
+    "fallo actual": 0.32150176580289724,
+    "activo": true
+  },
+  "3": {
+    "ancho de banda": 50,
+    "probabilidad de fallo": 0.05,
+    "capacidad de encolamiento": 20,
+    "fallo actual": 0.4047944187704581,
+    "activo": true
+  },
+  "4": {
+    "ancho de banda": 46,
+    "probabilidad de fallo": 0.05,
+    "capacidad de encolamiento": 20,
+    "fallo actual": 0.9062048098240674,
+    "activo": true
+  },
+  "5": {
+    "ancho de banda": 26,
+    "probabilidad de fallo": 0.05,
+    "capacidad de encolamiento": 20,
+    "fallo actual": 0.6479508309419583,
+    "activo": true
+  },
+  "6": {
+    "ancho de banda": 31,
+    "probabilidad de fallo": 0.05,
+    "capacidad de encolamiento": 20,
+    "fallo actual": 0.44803359889918803,
+    "activo": true
+  },
+  "7": {
+    "ancho de banda": 97,
+    "probabilidad de fallo": 0.02,
+    "capacidad de encolamiento": 50,
+    "fallo actual": 0.1799182967162528,
+    "activo": true
+  },
+  "8": {
+    "ancho de banda": 56,
+    "probabilidad de fallo": 0.02,
+    "capacidad de encolamiento": 50,
+    "fallo actual": 0.45643965697853595,
+    "activo": true
+  },
+  "9": {
+    "ancho de banda": 95,
+    "probabilidad de fallo": 0.02,
+    "capacidad de encolamiento": 50,
+    "fallo actual": 0.29062962963821626,
+    "activo": true
+  },
+  "10": {
+    "ancho de banda": 81,
+    "probabilidad de fallo": 0.02,
+    "capacidad de encolamiento": 50,
+    "fallo actual": 0.5732747464766959,
+    "activo": true
+  },
+  "11": {
+    "ancho de banda": 86,
+    "probabilidad de fallo": 0.02,
+    "capacidad de encolamiento": 50,
+    "fallo actual": 0.41778074842272983,
+    "activo": true
+  },
+  "12": {
+    "ancho de banda": 75,
+    "probabilidad de fallo": 0.02,
+    "capacidad de encolamiento": 50,
+    "fallo actual": 0.2398200162510299,
+    "activo": true
+  },
+  "13": {
+    "ancho de banda": 91,
+    "probabilidad de fallo": 0.02,
+    "capacidad de encolamiento": 50,
+    "fallo actual": 0.5088463047192628,
+    "activo": true
+  },
+  "14": {
+    "ancho de banda": 59,
+    "probabilidad de fallo": 0.02,
+    "capacidad de encolamiento": 50,
+    "fallo actual": 0.7446448059809001,
+    "activo": true
+  },
+  "15": {
+    "ancho de banda": 46,
+    "probabilidad de fallo": 0.05,
+    "capacidad de encolamiento": 20,
+    "fallo actual": 0.609146123500826,
+    "activo": true
+  },
+  "16": {
+    "ancho de banda": 46,
+    "probabilidad de fallo": 0.05,
+    "capacidad de encolamiento": 20,
+    "fallo actual": 0.20170438901127785,
+    "activo": true
+  },
+  "17": {
+    "ancho de banda": 17,
+    "probabilidad de fallo": 0.05,
+    "capacidad de encolamiento": 20,
+    "fallo actual": 0.901850519084831,
+    "activo": true
+  },
+  "18": {
+    "ancho de banda": 45,
+    "probabilidad de fallo": 0.05,
+    "capacidad de encolamiento": 20,
+    "fallo actual": 0.843613061583944,
+    "activo": true
+  },
+  "19": {
+    "ancho de banda": 17,
+    "probabilidad de fallo": 0.05,
+    "capacidad de encolamiento": 20,
+    "fallo actual": 0.22463002684033506,
+    "activo": true
+  },
+  "20": {
+    "ancho de banda": 1,
+    "probabilidad de fallo": 0.1,
+    "capacidad de encolamiento": 5,
+    "fallo actual": 0.7524473211481562,
+    "activo": true
+  }
 }
