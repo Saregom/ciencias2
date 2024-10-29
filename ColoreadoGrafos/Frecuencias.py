@@ -1,7 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.spatial import Delaunay
-
 
 # Se crea la matriz inicial de frecuencias
 frecuencies_matrix = np.array([[0,85,175,200,50,100], 
