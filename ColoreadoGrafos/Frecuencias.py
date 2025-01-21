@@ -1,13 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import pandas as pd
 
-# Se crea la matriz inicial de frecuencias
-frecuencies_matrix = np.array([[0,85,175,200,50,100], 
-                              [85,0,125,175,100,160], 
-                              [175,125,0,100,200,250], 
-                              [200,175,100,0,210,220],
-                              [50,100,200,210,0,100],
-                              [100,160,250,220,100,0]])
+# Leer la matriz de frecuencias desde un archivo CSV
+frecuencies_matrix = pd.read_csv('frecuencias.csv', header=None).values
 
 # Se crea la matriz de adyacencia (de conexiones) a partir de la matriz de frecuencias
 n = 6
