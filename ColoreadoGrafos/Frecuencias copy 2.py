@@ -19,6 +19,8 @@ class GraphColoring:
         self.sliders = []
         self.create_sliders()
         self.create_button()
+        self.node_labels = list(range(1, self.n + 1))
+        self.min_colors_text = None
         self.draw_graph()
         plt.show()
 
@@ -59,22 +61,31 @@ class GraphColoring:
                     self.ax.plot([self.points[i, 0], self.points[j, 0]], [self.points[i, 1], self.points[j, 1]], color="gray")
         for i in range(len(self.points)):
             self.ax.annotate(
-                i+1, self.points[i, :],
+                self.node_labels[i], self.points[i, :],
                 color='white', fontsize="large", weight='heavy',
                 horizontalalignment='center', verticalalignment='center'
             )
+            # solo para mostrar el número de colores
+        min_colors = len(set(self.colors)) - self.colors.count(-1)
+        print(f'Minimum Colors: {min_colors}')
+        #if self.min_colors_text:
+        #    self.min_colors_text.remove()
+        #self.min_colors_text = self.ax.text(0.5, 1.05, f'Minimum Colors: {min_colors}', transform=self.ax.transAxes, ha='center', fontsize=12, color='black')
+        
         self.ax.axis('off')
         self.ax.set_aspect('equal', adjustable='box')
         plt.draw()
 
     def add_node(self, event):
         print("Button pressed!") 
-        self.update_frequencies()
+        
         self.n += 1
+        self.node_labels.append(self.n)
         self.points = self.create_points()
         self.adjacency_matrix = np.pad(self.adjacency_matrix, ((0, 1), (0, 1)), mode='constant', constant_values=0)
         self.colors.append(-1)
         self.frecuencies_matrix = np.pad(self.frecuencies_matrix, ((0, 1), (0, 1)), mode='constant', constant_values=0)
+        self.update_frequencies()
         self.create_sliders()  # Recreate sliders
         self.draw_graph()
 
@@ -87,7 +98,6 @@ class GraphColoring:
         self.colors = self.get_coloracion(self.adjacency_matrix)
 
     def create_button(self):
-        print("Button creado!") 
         ax_button = plt.axes([0.8, 0.05, 0.1, 0.075])
         self.btn = Button(ax_button, 'Add Node')
         self.btn.on_clicked(self.add_node)
@@ -104,4 +114,3 @@ class GraphColoring:
 if __name__ == "__main__":
     
     GraphColoring()
-  
