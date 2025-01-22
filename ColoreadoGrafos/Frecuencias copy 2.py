@@ -8,9 +8,9 @@ class GraphColoring:
         self.frecuencies_matrix = pd.read_csv('frecuencias.csv', header=None).values
         self.n = self.frecuencies_matrix.shape[0]
         self.adjacency_matrix = self.get_adjacency_matrix(self.frecuencies_matrix)
-        self.input_box_n_coloring = []
         # self.colors = self.get_coloracion(self.adjacency_matrix)
-        self.colors = self.get_optimal_n_coloring(3) # Se especifica el numero de colores minimos (aumentar la cantidad de colores para mayor variedad)
+        self.minimum_colors = 4 # cambiar esta si no se puede colorear
+        self.colors = self.get_optimal_n_coloring(self.minimum_colors) # Se especifica el numero de colores minimos (aumentar la cantidad de colores para mayor variedad)
         self.color_map = ['green', 'blue', 'red', 'orange', 'purple', 'cyan', 'lime', 'magenta', 'yellow', 'pink']
         self.radius = 10
         self.points = self.create_points()
@@ -19,6 +19,7 @@ class GraphColoring:
         self.sliders = []
         self.create_sliders()
         self.create_button()
+        self.input_box_n_coloring = []
         self.create_input_box()
         self.create_button2()
         self.node_labels = list(range(1, self.n + 1))
@@ -91,7 +92,7 @@ class GraphColoring:
         try:
             print(f'\n- La probabilidad del {self.input_box_n_coloring[0].text}-Coloreado optimo es:', round(probabilidad_coloreado, 3))
         except:
-            print(f'\n- La probabilidad del 3-Coloreado optimo es:', round(probabilidad_coloreado, 3))
+            print(f'\n- La probabilidad del {self.minimum_colors}-Coloreado optimo es:', round(probabilidad_coloreado, 3))
 
     
     def get_optimal_n_coloring(self, num_colors):
@@ -123,8 +124,6 @@ class GraphColoring:
 
     # ------ EVENTOS ------
     def add_node(self, event):
-        print("Button pressed!") 
-        
         self.n += 1
         self.node_labels.append(self.n)
         self.points = self.create_points()
@@ -141,8 +140,8 @@ class GraphColoring:
             self.frecuencies_matrix[i, self.n-1] = self.sliders[i].val
         pd.DataFrame(self.frecuencies_matrix).to_csv('frecuencias.csv', header=False, index=False)
         self.adjacency_matrix = self.get_adjacency_matrix(self.frecuencies_matrix)
-        self.colors = self.get_coloracion(self.adjacency_matrix)
-        # self.colors = self.get_optimal_n_coloring(3)
+        # self.colors = self.get_coloracion(self.adjacency_matrix)
+        self.colors = self.get_optimal_n_coloring(int(self.input_box_n_coloring[0].text))
 
     # ------ CREACION DE LA INTERFAZ GRAFICA ------
     def create_points(self): # Crear puntos para graficar (distribuidos en un círculo para visualización)    
