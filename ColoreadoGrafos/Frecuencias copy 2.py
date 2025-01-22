@@ -142,7 +142,7 @@ class GraphColoring:
         pd.DataFrame(self.frecuencies_matrix).to_csv('frecuencias.csv', header=False, index=False)
         self.adjacency_matrix = self.get_adjacency_matrix(self.frecuencies_matrix)
         self.colors = self.get_coloracion(self.adjacency_matrix)
-
+        # self.colors = self.get_optimal_n_coloring(3)
 
     # ------ CREACION DE LA INTERFAZ GRAFICA ------
     def create_points(self): # Crear puntos para graficar (distribuidos en un círculo para visualización)    
@@ -193,8 +193,8 @@ class GraphColoring:
 
     def create_button2(self):
         ax_button = plt.axes([0.38, 0.02, 0.2, 0.03])
-        self.btn = Button(ax_button, 'Create N-Coloring')
-        self.btn.on_clicked(self.update_coloring)
+        self.btn2 = Button(ax_button, 'Create N-Coloring')
+        self.btn2.on_clicked(self.update_coloring)
 
     def update_coloring(self, event):
         try:
