@@ -8,7 +8,7 @@ class GraphColoring:
         self.frecuencies_matrix = pd.read_csv('frecuencias.csv', header=None).values
         self.n = self.frecuencies_matrix.shape[0]
         self.adjacency_matrix = self.get_adjacency_matrix(self.frecuencies_matrix)
-        self.minimum_colors = 4
+        self.minimum_colors = 5
         self.colors = self.get_optimal_n_coloring(self.minimum_colors)
         self.color_map = ['green', 'blue', 'red', 'orange', 'purple', 'cyan', 'lime', 'magenta', 'yellow', 'pink']
         self.radius = 10
@@ -35,6 +35,25 @@ class GraphColoring:
                 if frecuency < 150 and frecuency != 0:
                     adjacency_matrix[i, j] = 1
         return adjacency_matrix
+    
+    def get_coloracion(self, adjacency_matrix1):
+        colors = [-1] * self.n
+        available_colors = [0] * self.n
+        for node in range(self.n):
+            for neighbor in range(self.n):
+                if adjacency_matrix1[node, neighbor] == 1 and colors[neighbor] != -1:
+                    available_colors[colors[neighbor]] = 1
+            for color in range(self.n):
+                if available_colors[color] == 0:
+                    colors[node] = color
+                    break
+            available_colors = [0] * self.n
+
+        # solo para mostrar el número de colores
+        min_colors = len(set(self.colors)) - self.colors.count(-1)
+        print(f'- Minimum Colors: {min_colors}')
+
+        return colors
 
     def get_optimal_n_coloring(self, num_colors):
         colors = [-1] * self.n
@@ -53,6 +72,7 @@ class GraphColoring:
             print("\n----- ¡ No se puede colorear el grafo con", num_colors, "colores. ! -----\n")
             exit()
         return colors
+    
     def update_coloring(self, event):
         try:
             num_colors = int(self.input_box_n_coloring[0].text)  # Convertir el texto del cuadro a un número entero
@@ -60,29 +80,35 @@ class GraphColoring:
             self.draw_graph()
         except ValueError:
             print("Please enter a valid number.")
+            
     def get_maximum_matching(self):
-        matched = [-1] * self.n
-        matching_edges = []
+        visited = [False] * self.n
+        matching = []
 
-        def bpm(u, seen):
-            for v in range(self.n):
-                if self.adjacency_matrix[u, v] == 1 and not seen[v]:
-                    seen[v] = True
-                    if matched[v] == -1 or bpm(matched[v], seen):
-                        matched[v] = u
-                        return True
-            return False
+        # Explorar las conexiones de cada nodo
+        for u in range(self.n):
+            if not visited[u]:
+                for v in range(self.n):
+                    # Si existe una conexión y ambos nodos no han sido emparejados
+                    if self.adjacency_matrix[u, v] == 1 and not visited[v]:
+                        matching.append((u, v))  # Añadir el par al emparejamiento
+                        visited[u] = True  # Marcar nodos como visitados
+                        visited[v] = True
+                        
+                        # Colorear ambos nodos con el mismo color
+                        self.colors[v] = self.colors[u] if self.colors[u] != -1 else self.colors[v]
+                        if self.colors[u] == -1 and self.colors[v] == -1:  # Ambos sin color
+                            available_color = max(self.colors) + 1  # Asignar un nuevo color
+                            self.colors[u] = available_color
+                            self.colors[v] = available_color
+                        elif self.colors[u] == -1:  # Solo u sin color
+                            self.colors[u] = self.colors[v]
+                        elif self.colors[v] == -1:  # Solo v sin color
+                            self.colors[v] = self.colors[u]
+                        break
 
-        for i in range(self.n):
-            seen = [False] * self.n
-            bpm(i, seen)
-
-        for v in range(self.n):
-            if matched[v] != -1:
-                matching_edges.append((matched[v], v))
-
-        self.max_matching_edges = list(set(matching_edges))
-        print("Maximum Matching Edges:", self.max_matching_edges)
+        # Guardar los emparejamientos en el atributo para dibujarlos
+        self.max_matching_edges = matching
 
     def add_node(self, event):
         self.n += 1
@@ -101,6 +127,7 @@ class GraphColoring:
             self.frecuencies_matrix[i, self.n-1] = self.sliders[i].val
         pd.DataFrame(self.frecuencies_matrix).to_csv('frecuencias.csv', header=False, index=False)
         self.adjacency_matrix = self.get_adjacency_matrix(self.frecuencies_matrix)
+        minimum_colors = self.get_coloracion(self.adjacency_matrix)
         self.colors = self.get_optimal_n_coloring(int(self.input_box_n_coloring[0].text))
 
     def create_points(self):
