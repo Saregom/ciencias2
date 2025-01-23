@@ -8,8 +8,6 @@ class GraphColoring:
         self.frecuencies_matrix = pd.read_csv('frecuencias.csv', header=None).values
         self.n = self.frecuencies_matrix.shape[0]
         self.adjacency_matrix = self.get_adjacency_matrix(self.frecuencies_matrix)
-        self.minimum_colors = 5
-        self.colors = self.get_optimal_n_coloring(self.minimum_colors)
         self.color_map = ['green', 'blue', 'red', 'orange', 'purple', 'cyan', 'lime', 'magenta', 'yellow', 'pink']
         self.radius = 10
         self.points = self.create_points()
@@ -24,6 +22,7 @@ class GraphColoring:
         self.create_button3()
         self.node_labels = list(range(1, self.n + 1))
         self.max_matching_edges = []
+        self.colors = self.get_coloracion(self.adjacency_matrix)
         self.draw_graph()
         plt.show()
 
@@ -50,28 +49,44 @@ class GraphColoring:
             available_colors = [0] * self.n
 
         # solo para mostrar el número de colores
-        min_colors = len(set(self.colors)) - self.colors.count(-1)
-        print(f'- Minimum Colors: {min_colors}')
+        minimum_colors = len(set(colors)) - colors.count(-1)
+        self.input_box_n_coloring[0].set_val(str(minimum_colors))
+        print(f'- Minimum Colors: {minimum_colors}')
 
         return colors
 
     def get_optimal_n_coloring(self, num_colors):
-        colors = [-1] * self.n
-        try:
-            for node in range(self.n):
-                forbidden_colors = {
-                    colors[j] for j in range(self.n) if self.adjacency_matrix[node, j] == 1 and colors[j] != -1
-                }
-                color_usage = [colors.count(c) for c in range(num_colors)]
-                available_colors = [
-                    color for color in range(num_colors) if color not in forbidden_colors
-                ]
-                best_color = min(available_colors, key=lambda c: color_usage[c])
-                colors[node] = best_color
-        except ValueError:
-            print("\n----- ¡ No se puede colorear el grafo con", num_colors, "colores. ! -----\n")
-            exit()
-        return colors
+        colors = [-1] * self.n  # Inicializa todos los nodos sin color
+        adjacency_matrix = self.adjacency_matrix
+
+        def is_safe_to_color(node, color):
+            for neighbor in range(self.n):
+                if adjacency_matrix[node][neighbor] == 1 and colors[neighbor] == color:
+                    return False
+            return True
+
+        def color_graph(node, used_colors):
+            if node == self.n:  # Si todos los nodos están coloreados
+                # Verifica que se hayan utilizado exactamente `num_colors`
+                if len(set(colors)) == num_colors:
+                    return True
+                return False
+
+            for color in range(num_colors):
+                if is_safe_to_color(node, color):
+                    colors[node] = color  # Asigna un color temporal
+                    if color_graph(node + 1, used_colors | {color}):  # Intenta colorear el siguiente nodo
+                        return True
+                    colors[node] = -1  # Retrocede si no es posible
+
+            return False
+
+        if color_graph(0, set()):
+            print(f"El grafo se coloreó exitosamente con exactamente {num_colors} colores.")
+            return colors
+        else:
+            print(f"No es posible colorear el grafo con exactamente {num_colors} colores.")
+            return [-1] * self.n  # Devuelve colores inválidos si no es posible
     
     def update_coloring(self, event):
         try:
@@ -81,7 +96,7 @@ class GraphColoring:
         except ValueError:
             print("Please enter a valid number.")
             
-    def get_maximum_matching(self):
+    def get_matching(self):
         visited = [False] * self.n
         matching = []
 
@@ -127,8 +142,7 @@ class GraphColoring:
             self.frecuencies_matrix[i, self.n-1] = self.sliders[i].val
         pd.DataFrame(self.frecuencies_matrix).to_csv('frecuencias.csv', header=False, index=False)
         self.adjacency_matrix = self.get_adjacency_matrix(self.frecuencies_matrix)
-        minimum_colors = self.get_coloracion(self.adjacency_matrix)
-        self.colors = self.get_optimal_n_coloring(int(self.input_box_n_coloring[0].text))
+        self.colors = self.get_coloracion(self.adjacency_matrix)
 
     def create_points(self):
         theta = np.linspace(0, 2 * np.pi, self.n, endpoint=False)
@@ -183,7 +197,7 @@ class GraphColoring:
         self.btn3.on_clicked(self.find_max_matching)
 
     def find_max_matching(self, event):
-        self.get_maximum_matching()
+        self.get_matching()
         self.draw_graph()
 
 if __name__ == "__main__":
